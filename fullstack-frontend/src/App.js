@@ -1,7 +1,11 @@
+import { Navbar } from "./component/Navbar";
+import { Home } from "./pages/Home";
+
 function App() {
   return (
-    <div className="App">
-      <p className="bg-blue-600 font-bold text-2xl text-red-700">Hello guys</p>
+    <div>
+      <Navbar/>
+      <Home/>
     </div>
   );
 }
