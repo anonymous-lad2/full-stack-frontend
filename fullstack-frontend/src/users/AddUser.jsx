@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from 'react-hot-toast'
 
 export const AddUser = () => {
   const [newUser, setNewUser] = useState({ name: "", username: "", email: "" });
@@ -17,6 +18,7 @@ export const AddUser = () => {
 
      await axios.post("http://localhost:8080/user", newUser);
      navigate("/")
+     toast.success("New user added successfully")
 
   };
 

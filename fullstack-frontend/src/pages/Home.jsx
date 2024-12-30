@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from 'react-hot-toast'
+import { Link, useParams } from "react-router-dom";
 
 export const Home = () => {
   const [users, setUsers] = useState([]);
@@ -14,9 +16,15 @@ export const Home = () => {
     setUsers(result.data);
   };
 
+  const deleteUser = async (id) => {
+    await axios.delete(`http://localhost:8080/user/${id}`)
+    loadData();
+    toast.success("User removed successfuly")
+  }
+
   return (
     <div className="flex justify-center items-center mt-20">
-      <table className="w-10/12 border-collapse border border-gray-300">
+      <table className="w-10/12 border-collapse border border-gray-300 shadow-lg">
         <caption className="text-lg font-semibold mb-4">
           User Information
         </caption>
@@ -48,13 +56,16 @@ export const Home = () => {
                   {user.email}
                 </td>
                 <td className="px-4 py-2 border border-gray-300 flex gap-2 justify-evenly">
-                  <button className="bg-blue-500 text-white py-2 px-3 text-xl rounded-lg hover:scale-105 transition-all duration-100">
+                  <Link className="bg-blue-500 text-white py-2 px-3 text-xl rounded-lg hover:scale-105 transition-all duration-100"
+                  to={`/viewuser/${user.id}`}>
                     View
-                  </button>
-                  <button className="border border-dashed border-blue-500 px-3 text-xl text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white">
+                  </Link>
+                  <Link className="border border-dashed border-blue-500 px-3 text-xl text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white"
+                  to={`/edituser/${user.id}`}>
                     Edit
-                  </button>
-                  <button className="bg-red-500 text-white py-2 px-3 text-xl rounded-lg hover:scale-105 transition-all duration-100">
+                  </Link>
+                  <button className="bg-red-500 text-white py-2 px-3 text-xl rounded-lg hover:scale-105 transition-all duration-100"
+                  onClick={() => deleteUser(user.id)}>
                     Delete
                   </button>
                 </td>
